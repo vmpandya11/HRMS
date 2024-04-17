@@ -1,0 +1,27 @@
+.leave-list-container {
+    width: 83vw;
+    margin-right: 40px;
+}
+
+.leave-list-container table {
+    width: 100%;
+}
+
+.leave-list-container th,
+.leave-list-container td {
+    text-align: center;
+}
+
+.leave-list-container th {
+    background-color: #f2f2f2;
+}
+
+.leave-list-container .btn-link {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.leave-list-container .btn-link:hover {
+    text-decoration: none;
+}

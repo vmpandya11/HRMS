@@ -1,0 +1,8 @@
+.custom-modal .modal-dialog {
+    max-width: 800px;
+    /* Adjust the width as needed */
+    margin: 1.75rem auto;
+    /* Adjust the margin as needed */
+    margin-top: 100px;
+    ;
+}
