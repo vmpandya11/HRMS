@@ -141,9 +141,10 @@ const LeaveList = () => {
 
                                 <div className="row justify-content-end mt-3">
                                     <div className="col-auto">
-                                        {/* <Button className={` ${currentPage === 1 ? 'disabled' : ''} ${currentPage !== 1 ? 'btn btn-primary m-3' : ''}`} onClick={currentPage !== 1 ? handlePrevClick : undefined} style={{ width: "100px" }}>Previous</Button>
-                                        <Button className={` ${currentPage === totalPages ? 'disabled' : ''} ${currentPage !== totalPages ? 'btn btn-primary' : ''}`} onClick={currentPage !== totalPages ? handleNextClick : undefined} style={{ width: "100px" }}>Next</Button> */}
-                                        <Button className={` ${currentPage === 1 ? 'disabled' : ''} ${currentPage !== 1 ? 'btn btn-primary m-3' : ''}`} onClick={currentPage !== 1 ? handlePrevClick : undefined} style={{ width: "100px" }}>Previous</Button>
+
+                                        <Button className={` ${currentPage === 1 ? 'disabled' : ''} ${currentPage !== 1 ? 'btn btn-primary ' : ''}`} onClick={currentPage !== 1 ? handlePrevClick : undefined} style={{ width: "100px" }}>Previous</Button>
+                                    </div>
+                                    <div className="col-auto">
                                         <Button className={` ${currentPage === totalPages || currentLeaveData.length < entriesPerPage ? 'disabled' : ''} ${currentPage !== totalPages ? 'btn btn-primary' : ''}`} onClick={currentPage !== totalPages ? handleNextClick : undefined} style={{ width: "100px" }}>Next</Button>
                                     </div>
                                 </div>
