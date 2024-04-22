@@ -100,7 +100,7 @@ app.get("/leaves", async (req, resp) => {
         resp.send(leaves);
     }
     else {
-        resp.send({ result: "No Employees Found" })
+        resp.send({ result: "No Leaves Found" })
     }
 })
 
