@@ -1,10 +1,22 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import './Sidebar.css'
+import { useNavigate } from 'react-router-dom'
 
 
 export default function Sidebar() {
+    const auth = localStorage.getItem('user');
+    const navigate = useNavigate();
+    const logout = () => {
+        localStorage.clear();
+        navigate("/signup")
+    }
+
+    if (!localStorage.getItem('user')) {
+        navigate('/signup');
+    }
     return (
+
         <div>
 
             <aside className="main-sidebar sidebar-dark-primary elevation-4">
@@ -68,13 +80,16 @@ export default function Sidebar() {
                                         <p>Holiday</p>
                                     </a></Link>
                                 </li>
+
+                                <li className="nav-item">
+                                    <Link onClick={logout} to="/signup">   <a href="pages/layout/top-nav.html" className="nav-link">
+                                        <i className="far fa-circle nav-icon" />
+                                        <p>
+                                            Logout
+                                        </p>
+                                    </a></Link>
+                                </li>
                                 {/*  <ul className="nav nav-treeview">
-                                    <li className="nav-item">
-                                        <a href="pages/layout/top-nav.html" className="nav-link">
-                                            <i className="far fa-circle nav-icon" />
-                                            <p>Top Navigation</p>
-                                        </a>
-                                    </li>
                                     <li className="nav-item">
                                         <a href="pages/layout/top-nav-sidebar.html" className="nav-link">
                                             <i className="far fa-circle nav-icon" />
