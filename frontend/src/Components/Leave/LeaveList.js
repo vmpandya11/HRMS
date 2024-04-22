@@ -17,25 +17,27 @@ const LeaveList = () => {
     const [selectedLeaveData, setSelectedLeaveData] = useState(null);
     const tableRef = useRef(null);
     const params = useParams();
+    const [searchTerm, setSearchTerm] = useState('');
+
+
+    const fetchLeaveData = async () => {
+        try {
+            const response = await fetch('http://localhost:4000/leaves');
+            if (!response.ok) {
+                throw new Error('Failed to fetch leave data');
+            }
+            const data = await response.json();
+            setLeaveData(data);
+            setLoading(false);
+        } catch (error) {
+            setError(error.message);
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
-        const fetchLeaveData = async () => {
-            try {
-                const response = await fetch('http://localhost:4000/leaves');
-                if (!response.ok) {
-                    throw new Error('Failed to fetch leave data');
-                }
-                const data = await response.json();
-                setLeaveData(data);
-                setLoading(false);
-            } catch (error) {
-                setError(error.message);
-                setLoading(false);
-            }
-        };
         fetchLeaveData();
     }, []);
-
 
 
     const deleteLeave = async (id) => {
@@ -70,16 +72,30 @@ const LeaveList = () => {
         setShowModal(true);
     };
 
+
+    const filterleaveData = leaveData.filter(leave =>
+        leave.leavetype.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        leave.leavealias.includes(searchTerm) ||
+        leave.noofleave.includes(searchTerm)
+    );
+
     // Calculate the index range for the current page
     const startIndex = (currentPage - 1) * entriesPerPage;
     const endIndex = startIndex + entriesPerPage;
 
     // Slice the leaveData array to display only the records for the current page
-    const currentLeaveData = leaveData.slice(startIndex, endIndex);
+    const currentLeaveData = filterleaveData.slice(startIndex, endIndex);
+
+
 
     return (
         <section className="content">
             <div className="container-fluid">
+                <div className="row justify-content-end mb-2" style={{ marginRight: "30px" }}> {/* Align content to the right */}
+                    <div className="col-auto">
+                        <input type="text" placeholder='search leave' onChange={(e) => setSearchTerm(e.target.value)}></input>
+                    </div>
+                </div>
                 <div className="row">
                     <div className="col-12" style={{ width: "83vw", marginRight: "40px" }}>
                         <div className="card">
@@ -118,6 +134,7 @@ const LeaveList = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
+
                                         {currentLeaveData.map((leave) => (
                                             <tr key={leave._id}>
                                                 <td className="text-center">{leave.leavetype}</td>
@@ -136,6 +153,7 @@ const LeaveList = () => {
 
                                             </tr>
                                         ))}
+
                                     </tbody>
                                 </table>
 
@@ -148,6 +166,7 @@ const LeaveList = () => {
                                         <Button className={` ${currentPage === totalPages || currentLeaveData.length < entriesPerPage ? 'disabled' : ''} ${currentPage !== totalPages ? 'btn btn-primary' : ''}`} onClick={currentPage !== totalPages ? handleNextClick : undefined} style={{ width: "100px" }}>Next</Button>
                                     </div>
                                 </div>
+
                             </div>
 
                             <UpdateLeave

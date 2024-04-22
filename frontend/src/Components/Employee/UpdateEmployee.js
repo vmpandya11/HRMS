@@ -61,8 +61,6 @@ export default function Updatemodal({ showModal, handleClose, employeeId }) {
         setError("");
     };
 
-
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -114,6 +112,7 @@ export default function Updatemodal({ showModal, handleClose, employeeId }) {
             // setEmployeeData(resultData);
             handleClose(); // Close the modal
             resetForm();
+            window.location.reload();
             navigate("/addemployee");
         }
     };

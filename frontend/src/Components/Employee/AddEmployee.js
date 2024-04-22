@@ -134,7 +134,8 @@ export default function AddEmployee() {
                                         " onClick={() => setShowModal(true)}>
                                             {/* <FontAwesomeIcon icon={faPlus} style={{ fontSize: '2em', color: 'white', borderRadius: "50%" }} ></FontAwesomeIcon> */}
                                             Add Employee
-                                        </button>
+                                        </button><br />
+
                                     </li>
                                 </ol>
                             </div>

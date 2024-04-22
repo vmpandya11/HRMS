@@ -75,6 +75,16 @@ app.put("/employee/:id", async (req, resp) => {
     resp.send(result)
 })
 
+app.get("/search/:key", async (req, resp) => {
+    let result = await Employee.find({
+        "$or": [
+            { name: { $regex: req.params.key } },
+            { address: { $regex: req.params.key } },
+            { companyName: { $regex: req.params.key } }
+        ]
+    })
+    resp.send(result);
+})
 
 app.post("/add-leave", async (req, resp) => {
 
@@ -107,6 +117,17 @@ app.put("/leaves/:id", async (req, resp) => {
         })
     resp.send(result)
 })
+
+// app.get("/searchleave/:key", async (req, resp) => {
+//     let result = await Leave.find({
+//         "$or": [
+//             { leavetype: { $regex: req.params.key } },
+//             { leavealias: { $regex: req.params.key } },
+//             { noofleave: { $regex: req.params.key } }
+//         ]
+//     })
+//     resp.send(result);
+// })
 
 app.get("/leaves/:id", async (req, resp) => {
     let result = await Leave.findOne({ _id: req.params.id });
@@ -151,17 +172,39 @@ app.put("/holidays/:id", async (req, resp) => {
     resp.send(result)
 })
 
-app.get("/holidays/:id", async (req, resp) => {
-    let result = await Holiday.findOne({ _id: req.params.id });
-    if (result) {
-        resp.send(result);
-    }
-    else {
-        resp.send({ result: "No record found" })
-    }
+app.get("/searchholiday/:key", async (req, resp) => {
+    let result = await Holiday.find({
+        "$or": [
+            { holidayname: { $regex: req.params.key } },
+            { startdate: { $regex: req.params.key } },
+            { enddate: { $regex: req.params.key } }
+        ]
+    })
+    resp.send(result);
 })
 
+// app.get("/holidays/:id", async (req, resp) => {
+//     let result = await Holiday.findOne({ _id: req.params.id });
+//     if (result) {
+//         resp.send(result);
+//     }
+//     else {
+//         resp.send({ result: "No record found" })
+//     }
+// })
 
+app.get("/holidays/:id", async (req, resp) => {
+    try {
+        let result = await Holiday.findOne({ _id: req.params.id });
+        if (result) {
+            resp.send(result);
+        } else {
+            resp.status(404).send({ error: "No record found" });
+        }
+    } catch (error) {
+        resp.status(500).send({ error: "Internal Server Error" });
+    }
+});
 
 
 app.listen(4000);

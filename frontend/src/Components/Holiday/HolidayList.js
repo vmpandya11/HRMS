@@ -15,32 +15,33 @@ const HolidayList = () => {
     const [showModal, setShowModal] = useState(false);
     const [selectedholidayId, setSelectedHolidayId] = useState(null);
     const [selectedholidaydata, setSelectedHolidayData] = useState(null);
+    const [searchTerm, setSearchTerm] = useState('');
     const tableRef = useRef(null);
     const params = useParams();
 
-    useEffect(() => {
-        const fetchHolidayData = async () => {
-            try {
-                const response = await fetch('http://localhost:4000/holidays');
-                if (!response.ok) {
-                    throw new Error('Failed to fetch leave data');
-                }
-                const data = await response.json();
-                setHolidayData(data);
-                setLoading(false);
 
-                const formattedData = data.map(holiday => ({
-                    ...holiday,
-                    startdate: formatDate(holiday.startdate),
-                    enddate: formatDate(holiday.enddate)
-                }));
-                setHolidayData(formattedData);
-                setLoading(false);
-            } catch (error) {
-                setError(error.message);
-                setLoading(false);
+    const fetchHolidayData = async () => {
+        try {
+            const response = await fetch('http://localhost:4000/holidays');
+            if (!response.ok) {
+                throw new Error('Failed to fetch leave data');
             }
-        };
+            const data = await response.json();
+            const formattedData = data.map(holiday => ({
+                ...holiday,
+                startdate: formatDate(holiday.startdate),
+                enddate: formatDate(holiday.enddate)
+            }));
+            setHolidayData(formattedData);
+            setLoading(false);
+        } catch (error) {
+            setError(error.message);
+            setLoading(false);
+        }
+    };
+
+
+    useEffect(() => {
         fetchHolidayData();
     }, []);
 
@@ -85,12 +86,24 @@ const HolidayList = () => {
     const startIndex = (currentPage - 1) * entriesPerPage;
     const endIndex = startIndex + entriesPerPage;
 
-    // Slice the leaveData array to display only the records for the current page
-    const currentHolidayData = holidaydata.slice(startIndex, endIndex);
+    // Filter holiday data based on search term
+    const filteredHolidayData = holidaydata.filter(holiday =>
+        holiday.holidayname.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        holiday.startdate.includes(searchTerm) ||
+        holiday.enddate.includes(searchTerm)
+    );
+
+
+    const currentHolidayData = filteredHolidayData.slice(startIndex, endIndex);
 
     return (
         <section className="content">
             <div className="container-fluid">
+                <div className="row justify-content-end mb-2" style={{ marginRight: "30px" }}>
+                    <div className="col-auto">
+                        <input type="text" placeholder='search leave' onChange={(e) => setSearchTerm(e.target.value)}></input>
+                    </div>
+                </div>
                 <div className="row">
                     <div className="col-12" style={{ width: "83vw", marginRight: "40px" }}>
                         <div className="card">
@@ -176,3 +189,4 @@ const HolidayList = () => {
 }
 
 export default HolidayList;
+

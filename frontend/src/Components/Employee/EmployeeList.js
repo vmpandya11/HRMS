@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Updatemodal from './UpdateEmployee';
@@ -15,28 +14,21 @@ export default function EmployeeList() {
     const [selectedEmployeeId, setSelectedEmployeeId] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
-    const [entriesPerPage, setEntriesPerPage] = useState([5, 10, 15, 20, 25, 30]);
-    const [selectedEntriesPerPage, setSelectedEntriesPerPage] = useState(5);
-    const [dropdownWidth, setDropdownWidth] = useState('auto');
-    const [dropdownOptions, setDropdownOptions] = useState([]);
-    const tableRef = useRef(null); // Reference to the table element
+    const [entriesPerPage, setEntriesPerPage] = useState(5);
+    const [searchTerm, setSearchTerm] = useState('');
+    const tableRef = useRef(null);
 
     useEffect(() => {
         getEmployees();
-        generateDropdownOptions();
-    }, [currentPage, selectedEntriesPerPage]);
-
-    useEffect(() => {
-        calculateDropdownWidth();
-    }, [entriesPerPage]);
+    }, [currentPage, entriesPerPage]);
 
     const getEmployees = async () => {
-        const startIndex = (currentPage - 1) * selectedEntriesPerPage;
-        const endIndex = currentPage * selectedEntriesPerPage;
+        const startIndex = (currentPage - 1) * entriesPerPage;
+        const endIndex = currentPage * entriesPerPage;
         const result = await fetch('http://localhost:4000/employees');
         const data = await result.json();
         setEmployees(data.slice(startIndex, endIndex));
-        setTotalPages(Math.ceil(data.length / selectedEntriesPerPage));
+        setTotalPages(Math.ceil(data.length / entriesPerPage));
     };
 
     const deleteEmployee = async (id) => {
@@ -62,26 +54,9 @@ export default function EmployeeList() {
         setCurrentPage((prevPage) => prevPage - 1);
     };
 
-    const handlePageChange = (pageNumber) => {
-        setCurrentPage(pageNumber);
-    };
-
     const handleEntriesPerPageChange = (e) => {
-        setSelectedEntriesPerPage(parseInt(e.target.value));
+        setEntriesPerPage(parseInt(e.target.value));
         setCurrentPage(1);
-    };
-
-    const calculateDropdownWidth = () => {
-        const longestOptionLength = Math.max(...entriesPerPage.map(option => option.toString().length));
-        setDropdownWidth(`${longestOptionLength}ch`);
-    };
-
-    const generateDropdownOptions = () => {
-        const options = [];
-        for (let i = 1; i <= totalPages; i++) {
-            options.push(i);
-        }
-        setDropdownOptions(options);
     };
 
     const handleSubmit = async (data) => {
@@ -106,6 +81,11 @@ export default function EmployeeList() {
         }
     };
 
+    const filterEmployeeData = employees.filter(employee =>
+        employee.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        employee.email.includes(searchTerm)
+    );
+
     return (
         <div>
             <Menu />
@@ -113,12 +93,14 @@ export default function EmployeeList() {
 
             <section className="content">
                 <div className="container-fluid">
+                    <div className="row justify-content-end mb-2" style={{ marginRight: "30px" }}> {/* Align content to the right */}
+                        <div className="col-auto">
+                            <input type="text" placeholder='search employee' onChange={(e) => setSearchTerm(e.target.value)} ></input>
+                        </div>
+                    </div>
                     <div className="row">
                         <div className="col-12" style={{ width: "83vw", marginRight: "40px" }}>
                             <div className="card">
-                                {/* <div className="card-header"> */}
-                                {/* <h3 className="card-title">DataTable with minimal features &amp; hover style</h3> */}
-                                {/* </div> */}
                                 <div className="card-body">
                                     <div className="row">
                                         <div className="col-md-auto pe-2">
@@ -127,13 +109,13 @@ export default function EmployeeList() {
                                         <div className="col-md-auto" style={{ marginBottom: "10px", display: 'flex', alignItems: 'center' }}>
                                             <select
                                                 id="entriesPerPage"
-                                                value={selectedEntriesPerPage}
+                                                value={entriesPerPage}
                                                 onChange={handleEntriesPerPageChange}
                                                 style={{
                                                     width: "40px", height: '25px', marginRight: '10px'
                                                 }}
                                             >
-                                                {entriesPerPage.map((size) => (
+                                                {[5, 10, 15, 20, 25, 30].map((size) => (
                                                     <option key={size} value={size}>
                                                         {size}
                                                     </option>
@@ -154,19 +136,19 @@ export default function EmployeeList() {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {employees.map((employee, index) => (
+                                            {filterEmployeeData.map((employee, index) => (
                                                 <tr key={index}>
-                                                    <td className="text-center sno">{(currentPage - 1) * selectedEntriesPerPage + index + 1}</td>
+                                                    <td className="text-center sno">{(currentPage - 1) * entriesPerPage + index + 1}</td>
                                                     <td className="text-center">{employee.name}</td>
-                                                    <td className="text-center green-column">{employee.employeeId}</td>
+                                                    <td className="text-center green-column">{employee._id}</td>
                                                     <td className="text-center">{employee.email}</td>
 
-                                                    < div style={{ display: "flex", justifyContent: "space-around" }}>
+                                                    <div style={{ display: "flex", justifyContent: "space-around" }}>
                                                         <button style={{ background: "none", border: "none" }} onClick={() => handleUpdateClick(employee._id)}>
                                                             <FontAwesomeIcon icon={faEdit} style={{ color: "blue", fontSize: "larger" }} />
                                                         </button>
 
-                                                        <div class="vl" style={{ borderLeft: "1px solid black", height: "30px" }}></div>
+                                                        <div className="vl" style={{ borderLeft: "1px solid black", height: "30px" }}></div>
 
                                                         <button style={{ background: "none", border: "none", paddingLeft: "5px" }} onClick={() => deleteEmployee(employee._id)}>
                                                             <FontAwesomeIcon icon={faTrash} style={{ color: "red", fontSize: "larger" }} />
@@ -182,27 +164,12 @@ export default function EmployeeList() {
                                             handleSubmit={handleSubmit}
                                         />
                                     </table>
-                                    {/* <div className="row" style={{ float: "right" }}>
-                                        <div className="col-sm-12 col-md-12 text-center">
-                                            <div className="dataTables_paginate paging_simple_numbers" id="example2_paginate">
-                                                <ul className="pagination">
-                                                    <li className={`paginate_button page-item ${currentPage === 1 ? 'disabled' : ''}`}>
-                                                        <button className={`page-link ${currentPage !== 1 ? 'text-white bg-primary' : ''}`} onClick={currentPage !== 1 ? handlePrevClick : undefined}>Previous</button>
-                                                    </li>
-
-                                                    <li className={`paginate_button page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
-                                                        <button className={`page-link ${currentPage !== totalPages ? 'text-white bg-primary' : ''}`} onClick={currentPage !== totalPages ? handleNextClick : undefined}>Next</button>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div> */}
                                     <div className="row justify-content-end mt-3">
                                         <div className="col-auto">
                                             <Button className={` ${currentPage === 1 ? 'disabled' : ''} ${currentPage !== 1 ? 'btn btn-primary ' : ''}`} onClick={currentPage !== 1 ? handlePrevClick : undefined} style={{ width: "100px" }}>Previous</Button>
                                         </div>
                                         <div className="col-auto">
-                                            <Button className={` ${currentPage === totalPages ? 'disabled' : ''} ${currentPage !== totalPages ? 'btn btn-primary' : ''}`} onClick={currentPage !== totalPages ? handleNextClick : undefined} style={{ width: "100px" }}>Next</Button>
+                                            <Button className={` ${currentPage === totalPages || filterEmployeeData.length < entriesPerPage ? 'disabled' : ''} ${currentPage !== totalPages ? 'btn btn-primary' : ''}`} onClick={currentPage !== totalPages ? handleNextClick : undefined} style={{ width: "100px" }}>Next</Button>
                                         </div>
                                     </div>
                                 </div>
