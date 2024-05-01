@@ -6,10 +6,8 @@ export default function Dashbord() {
     return (
         <div className='App'>
             <Home />
-
-
             <div className='dashboard-title'>
-                <h1>Dashboard</h1>
+                <h1 style={{ marginRight: "740px" }}>Dashboard</h1>
             </div>
             <section className="content">
                 <div className="container-fluid">

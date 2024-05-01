@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import toastr from 'toastr';
+import login from './login-bg.png'
 import 'toastr/build/toastr.css';
+import './Login.css'
+
 
 export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -38,6 +42,9 @@ export default function Login() {
             toastr.error('Please Enter Correct Details', 'Error');
         }
     };
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
 
     // Configure toastr options
     toastr.options = {
@@ -48,6 +55,7 @@ export default function Login() {
         <div className="container">
             <div className="row justify-content-center align-items-center" style={{ height: "100vh" }}>
                 <div className="col-md-4">
+                    < img src={login} className="background-image" alt="Login Background" />
                     <div className="login-box">
                         <div className="card card-outline ">
                             <div className="card-header text-center">
@@ -68,12 +76,12 @@ export default function Login() {
                                     </div>
                                     {/* Password */}
                                     <div className="input-group mb-3">
-                                        <input type="password" className="form-control" placeholder="Password"
-                                            onChange={(e) => setPassword(e.target.value)} />
+                                        <input type={showPassword ? "text" : "password"} className="form-control" placeholder="Password"
+                                            value={password} onChange={(e) => setPassword(e.target.value)} />
                                         <div className="input-group-append">
-                                            <div className="input-group-text">
-                                                <span className="fas fa-lock"></span>
-                                            </div>
+                                            <button type="button" className="btn btn-outline-secondary" onClick={togglePasswordVisibility}>
+                                                <span className={`fas ${showPassword ? "fa-eye-slash" : "fa-eye"}`}></span>
+                                            </button>
                                         </div>
                                     </div>
                                     <div className="row">

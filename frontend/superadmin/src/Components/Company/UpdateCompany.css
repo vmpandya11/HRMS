@@ -1,0 +1,20 @@
+    .custom-modal .modal-dialog {
+        max-width: 800px;
+        /* Adjust the width as needed */
+        margin: 1.75rem auto;
+        /* Adjust the margin as needed */
+        margin-top: 100px;
+        ;
+    }
+
+    .modal-body::-webkit-scrollbar {
+        display: none;
+        /* Hide scrollbar for Chrome, Safari and Opera */
+    }
+
+    .modal-body {
+        -ms-overflow-style: none;
+        /* Hide scrollbar for Internet Explorer and Edge */
+        scrollbar-width: none;
+        /* Hide scrollbar for Firefox */
+    }

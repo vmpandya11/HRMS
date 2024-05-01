@@ -7,21 +7,10 @@
   pointer-events: none;
 }
 
-
-.center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
-}
-
-.companytitle {
-  color: #3F6791;
 }
 
 .App-header {
@@ -43,7 +32,6 @@
   from {
     transform: rotate(0deg);
   }
-
   to {
     transform: rotate(360deg);
   }

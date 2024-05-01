@@ -2,10 +2,9 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import './Sidebar.css'
 import { useNavigate } from 'react-router-dom'
+import { withTranslation } from 'react-i18next';
 
-
-export default function Sidebar() {
-
+export function Sidebar({ t }) {
     const auth = localStorage.getItem('user');
     const navigate = useNavigate();
     const logout = () => {
@@ -16,13 +15,14 @@ export default function Sidebar() {
     if (!localStorage.getItem('user')) {
         navigate('/signup');
     }
-
     return (
+
         <div>
+
             <aside className="main-sidebar sidebar-dark-primary elevation-4">
                 <a className="brand-link">
                     <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" className="brand-image img-circle elevation-3" style={{ opacity: '.8' }} />
-                    <span className="brand-text font-weight-light" style={{ float: 'left', display: 'flex' }} >CodeQuality</span>
+                    <span className="brand-text font-weight-light" style={{ display: "flex" }} >{t("CodeQuality")}</span>
 
                 </a>
                 <div className="sidebar">
@@ -31,7 +31,7 @@ export default function Sidebar() {
                             <img src="dist/img/user2-160x160.jpg" className="img-circle elevation-2" alt="User Image" />
                         </div>
                         <div className="info">
-                            <a className="d-block">Vinayak Pandya</a>
+                            <a className="d-block">{t("Vinayak Pandya")}</a>
                         </div>
                     </div>
                     <div className="form-inline">
@@ -44,53 +44,37 @@ export default function Sidebar() {
                             </div>
                         </div>
                     </div>
-                    <nav className="mt-2">
-                        <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                    <nav className="mt-2" >
+                        <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false" >
                             <li className="nav-item menu-open">
+                                <Link to="/">
+                                    <a className="nav-link " style={{ display: "flex" }} >
+                                        <i className="nav-icon fas fa-tachometer-alt" />
+                                        <p >
+                                            {t("Dashboard")}
+                                        </p>
+                                    </a>
+                                </Link>
 
-                                <li className="nav-item">
-                                    <Link to="/" ><a className="nav-link ">
+                                <li className="nav-item" >
+                                    <Link to="/company" ><a className="nav-link " style={{ display: "flex" }} >
                                         <i className="nav-icon fas fa-th" />
-                                        <p> Dashboard
+                                        <p> {t("Company")}
 
                                         </p>
                                     </a>
                                     </Link>
                                 </li>
-
                                 <li className="nav-item">
-                                    <Link to="/addemployee" ><a className="nav-link ">
-                                        <i className="nav-icon fas fa-th" />
-                                        <p> Employee
-
-                                        </p>
-                                    </a>
-                                    </Link>
-                                </li>
-                                <li className="nav-item">
-                                    <Link to="/leave"><a href="#" className="nav-link">
-                                        <i className="nav-icon fas fa-copy" />
-                                        <p>
-                                            Leave
-                                        </p>
-                                    </a></Link>
-                                </li>
-                                <li className="nav-item">
-                                    <Link to="/holiday"><a className="nav-link">
-                                        <i className="far fa-circle  nav-icon" />
-                                        <p>Holiday</p>
-                                    </a></Link>
-                                </li>
-
-                                <li className="nav-item">
-                                    <Link onClick={logout} to="/signup">   <a href="pages/layout/top-nav.html" className="nav-link">
+                                    <Link onClick={logout} to="/signup">   <a href="pages/layout/top-nav.html" className="nav-link" style={{ display: "flex" }} >
                                         <i className="far fa-circle nav-icon" />
-                                        <p>LogOut</p>
+                                        <p>
+                                            {t("Logout")}
+                                        </p>
                                     </a></Link>
                                 </li>
-
-                                {/* 
-                                 <ul className="nav nav-treeview"><li className="nav-item">
+                                {/*  <ul className="nav nav-treeview">
+                                    <li className="nav-item">
                                         <a href="pages/layout/top-nav-sidebar.html" className="nav-link">
                                             <i className="far fa-circle nav-icon" />
                                             <p>Top Navigation + Sidebar</p>
@@ -676,6 +660,6 @@ export default function Sidebar() {
     )
 }
 
-
+export default withTranslation()(Sidebar);
 
 

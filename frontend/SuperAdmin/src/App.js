@@ -1,37 +1,31 @@
 import './App.css';
-import Signup from './Components/Signup/Signup';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { I18nextProvider } from 'react-i18next'; // Import I18nextProvider
+import i18n from './i18n';
+import Signup from './Components/Signup/Signup';
 import Home from './Components/Home/Home';
 import Login from './Components/Login/Login';
 import ProtectedRoute from './Components/ProtectedRouter/ProtectedRouter';
-import Updatemodal from './Components/Employee/UpdateEmployee';
-import EmployeeList from './Components/Employee/EmployeeList';
 import Dashbord from './Components/Dashbord/Dashbord';
-import AddEmployee from './Components/Employee/AddEmployee';
-import Leave from './Components/Leave/Leave'
-import Holiday from './Components/Holiday/Holiday'
-
-
+import Company from './Components/Company/Company';
 
 function App() {
   return (
-    <div className="wrapper">
+    <div className="App">
       <BrowserRouter>
-        <Routes>
-          <Route path="/signup" element={<Signup />} />
-          {/* <Route path="/updatemodal/:id" element={<Updatemodal />} /> */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/holiday" element={<Holiday />} />
-          <Route path="/addemployee" element={<AddEmployee />} />
-          <Route path="/employeelist" element={<EmployeeList />} />
-          <Route path="/leave" element={< Leave />} />
-          <Route path="/" element={<Dashbord />} />
-          <Route path="/home" element={<ProtectedRoute Cmp={Home} />} />
-        </Routes>
+        {/* Wrap Routes with I18nextProvider */}
+        <I18nextProvider i18n={i18n}>
+          <Routes>
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/company" element={<Company />} />
+            <Route path="/" element={<Dashbord />} />
+            <Route path="/home" element={<ProtectedRoute Cmp={Home} />} />
+          </Routes>
+        </I18nextProvider>
       </BrowserRouter>
     </div>
   );
 }
 
 export default App;
-

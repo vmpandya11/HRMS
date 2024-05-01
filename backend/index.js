@@ -5,6 +5,7 @@ const User = require('./DB/User');
 const Employee = require('./DB/Employee');
 const Leave = require('./DB/Leave');
 const Holiday = require('./DB/Holiday');
+const Company = require('./DB/Company');
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -183,15 +184,6 @@ app.get("/searchholiday/:key", async (req, resp) => {
     resp.send(result);
 })
 
-// app.get("/holidays/:id", async (req, resp) => {
-//     let result = await Holiday.findOne({ _id: req.params.id });
-//     if (result) {
-//         resp.send(result);
-//     }
-//     else {
-//         resp.send({ result: "No record found" })
-//     }
-// })
 
 app.get("/holidays/:id", async (req, resp) => {
     try {
@@ -206,5 +198,52 @@ app.get("/holidays/:id", async (req, resp) => {
     }
 });
 
+
+app.post("/add-company", async (req, resp) => {
+
+    let company = new Company(req.body);
+    let result = await company.save();
+    resp.send(result);
+})
+
+
+app.get("/companys", async (req, resp) => {
+
+    let companys = await Company.find();
+    if (companys.length > 0) {
+        resp.send(companys);
+    }
+    else {
+        resp.send({ result: "No Employees Found" })
+    }
+})
+
+app.delete("/companys/:id", async (req, resp) => {
+    const result = await Company.deleteOne({ _id: req.params.id })
+    resp.send(result);
+})
+
+
+app.put("/companys/:id", async (req, resp) => {
+    let result = await Company.updateOne(
+        { _id: req.params.id },
+        {
+            $set: req.body
+        })
+    resp.send(result)
+})
+
+app.get("/companys/:id", async (req, resp) => {
+    try {
+        let result = await Company.findOne({ _id: req.params.id });
+        if (result) {
+            resp.send(result);
+        } else {
+            resp.status(404).send({ error: "No record found" });
+        }
+    } catch (error) {
+        resp.status(500).send({ error: "Internal Server Error" });
+    }
+});
 
 app.listen(4000);
