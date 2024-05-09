@@ -1,0 +1,23 @@
+/* .modal-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+
+    padding: 10px 20px;
+
+    border-top: 1px solid #ddd;
+
+    box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.1);
+
+}
+
+.modal-body {
+    max-height: 400px;
+
+    overflow-y: auto;
+
+    overflow-x: hidden;
+
+} */

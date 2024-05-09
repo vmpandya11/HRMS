@@ -127,6 +127,7 @@ const LeaveList = () => {
                                 <table className="table table-bordered table-hover" ref={tableRef}>
                                     <thead>
                                         <tr>
+                                            <th className="text-center">S.No</th>
                                             <th className="text-center">Leave Type</th>
                                             <th className="text-center">Leave Alias</th>
                                             <th className="text-center">No of Leave</th>
@@ -135,8 +136,9 @@ const LeaveList = () => {
                                     </thead>
                                     <tbody>
 
-                                        {currentLeaveData.map((leave) => (
+                                        {currentLeaveData.map((leave, index) => (
                                             <tr key={leave._id}>
+                                                <td className="text-center sno">{(currentPage - 1) * entriesPerPage + index + 1}</td>
                                                 <td className="text-center">{leave.leavetype}</td>
                                                 <td className="text-center">{leave.leavealias}</td>
                                                 <td className="text-center">{leave.noofleave}</td>

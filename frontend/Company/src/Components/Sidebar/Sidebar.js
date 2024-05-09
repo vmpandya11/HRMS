@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import './Sidebar.css'
 import { useNavigate } from 'react-router-dom'
+import { IoIosMan } from "react-icons/io";
 
 
 export default function Sidebar() {
@@ -22,7 +23,7 @@ export default function Sidebar() {
             <aside className="main-sidebar sidebar-dark-primary elevation-4">
                 <a className="brand-link">
                     <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" className="brand-image img-circle elevation-3" style={{ opacity: '.8' }} />
-                    <span className="brand-text font-weight-light" >CodeQuality</span>
+                    <span className="brand-text font-weight-light" style={{ display: "flex" }}>CodeQuality</span>
 
                 </a>
                 <div className="sidebar">
@@ -48,8 +49,9 @@ export default function Sidebar() {
                         <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                             <li className="nav-item menu-open">
                                 <Link to="/">
-                                    <a className="nav-link ">
+                                    <a className="nav-link " style={{ display: "flex" }}>
                                         <i className="nav-icon fas fa-tachometer-alt" />
+
                                         <p>
                                             Dashboard
 
@@ -58,8 +60,9 @@ export default function Sidebar() {
                                 </Link>
 
                                 <li className="nav-item">
-                                    <Link to="/addemployee" ><a className="nav-link ">
-                                        <i className="nav-icon fas fa-th" />
+                                    <Link to="/addemployee" ><a className="nav-link " style={{ display: "flex" }}>
+                                        <i className="nav-icon fas fa-user " />
+                                        {/* <IoIosMan style={{ width: "40px" }} /> */}
                                         <p> Employee
 
                                         </p>
@@ -67,23 +70,30 @@ export default function Sidebar() {
                                     </Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link to="/leave"><a href="#" className="nav-link">
-                                        <i className="nav-icon fas fa-copy" />
+                                    <Link to="/leave"><a href="#" className="nav-link" style={{ display: "flex" }}>
+                                        <i className="nav-icon fas fa-home mt-1" />
                                         <p>
                                             Leave
                                         </p>
                                     </a></Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link to="/holiday"><a className="nav-link">
-                                        <i className="far fa-circle nav-icon" />
+                                    <Link to="/holiday"><a className="nav-link" style={{ display: "flex" }}>
+                                        <i className="fas fa-home nav-icon mt-1" />
                                         <p>Holiday</p>
                                     </a></Link>
                                 </li>
-
+                                <li className="nav-item" >
+                                    <Link to="/salary" ><a className="nav-link " style={{ display: "flex" }} >
+                                        <i className="nav-icon  fas fa-coins mt-1" />
+                                        <p>Salary
+                                        </p>
+                                    </a>
+                                    </Link>
+                                </li>
                                 <li className="nav-item">
-                                    <Link onClick={logout} to="/signup">   <a href="pages/layout/top-nav.html" className="nav-link">
-                                        <i className="far fa-circle nav-icon" />
+                                    <Link onClick={logout} to="/signup">   <a href="pages/layout/top-nav.html" className="nav-link" style={{ display: "flex" }}>
+                                        <i className="fas fa-sign-out-alt nav-icon mt-1" />
                                         <p>
                                             Logout
                                         </p>

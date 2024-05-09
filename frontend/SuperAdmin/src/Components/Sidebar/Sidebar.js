@@ -23,7 +23,6 @@ export function Sidebar({ t }) {
                 <a className="brand-link">
                     <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" className="brand-image img-circle elevation-3" style={{ opacity: '.8' }} />
                     <span className="brand-text font-weight-light" style={{ display: "flex" }} >{t("CodeQuality")}</span>
-
                 </a>
                 <div className="sidebar">
                     <div className="user-panel mt-3 pb-3 mb-3 d-flex">
@@ -49,7 +48,7 @@ export function Sidebar({ t }) {
                             <li className="nav-item menu-open">
                                 <Link to="/">
                                     <a className="nav-link " style={{ display: "flex" }} >
-                                        <i className="nav-icon fas fa-tachometer-alt" />
+                                        <i className="nav-icon fas fa-tachometer-alt " />
                                         <p >
                                             {t("Dashboard")}
                                         </p>
@@ -58,16 +57,17 @@ export function Sidebar({ t }) {
 
                                 <li className="nav-item" >
                                     <Link to="/company" ><a className="nav-link " style={{ display: "flex" }} >
-                                        <i className="nav-icon fas fa-th" />
+                                        <i className="nav-icon  fas fa-industry" />
                                         <p> {t("Company")}
 
                                         </p>
                                     </a>
                                     </Link>
                                 </li>
+
                                 <li className="nav-item">
                                     <Link onClick={logout} to="/signup">   <a href="pages/layout/top-nav.html" className="nav-link" style={{ display: "flex" }} >
-                                        <i className="far fa-circle nav-icon" />
+                                        <i className="fas fa-sign-out-alt nav-icon mt-1" />
                                         <p>
                                             {t("Logout")}
                                         </p>

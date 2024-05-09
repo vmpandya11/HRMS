@@ -10,6 +10,7 @@ import Dashbord from './Components/Dashbord/Dashbord';
 import AddEmployee from './Components/Employee/AddEmployee';
 import Leave from './Components/Leave/Leave'
 import Holiday from './Components/Holiday/Holiday'
+import Salary from './Components/Salary/Salary'
 
 
 
@@ -24,6 +25,7 @@ function App() {
           <Route path="/holiday" element={<Holiday />} />
           <Route path="/addemployee" element={<AddEmployee />} />
           <Route path="/employeelist" element={<EmployeeList />} />
+          <Route path="/salary" element={<Salary />} />
           <Route path="/leave" element={< Leave />} />
           <Route path="/" element={<Dashbord />} />
           <Route path="/home" element={<ProtectedRoute Cmp={Home} />} />

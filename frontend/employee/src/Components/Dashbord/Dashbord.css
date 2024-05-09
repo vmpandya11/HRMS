@@ -1,0 +1,30 @@
+/* Add CSS for Content Section */
+.content {
+    margin-left: 260px;
+    /* Match sidebar width */
+    padding-top: 50px;
+    /* Add space for the top header */
+
+}
+
+.dashboard-title {
+    /* margin-top: 100px; */
+    margin-right: 740px;
+}
+
+/* Add CSS for Responsive Layout */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        /* Full width on small screens */
+        padding-top: 0;
+        /* Reset padding for small screens */
+        height: auto;
+        /* Auto height on small screens */
+    }
+
+    .content {
+        margin-left: 0;
+        /* Reset margin for small screens */
+    }
+}

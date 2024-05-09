@@ -3,14 +3,12 @@ import {
     CitySelect,
     CountrySelect,
     StateSelect,
-    LanguageSelect,
 } from "react-country-state-city";
 import "react-country-state-city/dist/react-country-state-city.css";
 import { withTranslation, useTranslation } from 'react-i18next';
 import Home from '../Home/Home';
 import CompanyList from './CompanyList';
-import { Modal, Button } from 'react-bootstrap';
-
+import './Company.css'
 const Company = ({ t }) => {
     const [companyname, setcompanyName] = useState("");
     const [companylocation, setCompanyLocation] = useState("");
@@ -31,20 +29,16 @@ const Company = ({ t }) => {
     const [countryid, setCountryid] = useState(0);
     const [stateid, setStateid] = useState(0);
     const [selectedCity, setselectedCity] = useState('');
-
     const closeModal = () => {
         setShowModal(false);
     };
-
     const { i18n } = useTranslation();
-
     useEffect(() => {
         const selectedLanguage = localStorage.getItem('selectedLanguage');
         if (selectedLanguage) {
             i18n.changeLanguage(selectedLanguage);
         }
     }, [i18n]);
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!validateInputs()) return;
@@ -89,7 +83,6 @@ const Company = ({ t }) => {
         console.warn(result);
         window.location.reload();
     };
-
     const validateInputs = () => {
         if (!companyname || !companylocation || !gstNo || !states || !country || !cities || !username || !password || !email || !ownername || !ownermail || !ownerNo) {
             setError("All fields are required");
@@ -103,21 +96,16 @@ const Company = ({ t }) => {
             setError("Invalid ownerno format. Please enter a numeric value.");
             return false;
         }
-
         setError("");
         return true;
     }
-
     const isValidEmail = (email) => {
         // Regular expression for email validation
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     };
-
     const isValidSalary = (salary) => {
         return /^[0-9]+$/.test(salary);
     };
-
-
     return (
         <div>
             <Home />
@@ -144,14 +132,12 @@ const Company = ({ t }) => {
                     </div>
                 </div>
             </div>
-
             {showModal && (
-
                 <div className="modal" style={{ display: 'block' }}>
                     <div className="modal-dialog modal-dialog-centered modal-lg">
                         <div className="modal-content" style={{ marginLeft: "30px" }}>
                             <div className="modal-header bg-primary text-white">
-                                <h5 className="modal-title">{t("Company Details")}</h5>
+                                <h5 className="modal-title">{("Company Details")}</h5>
                                 <button type="button" className="close" onClick={closeModal}>
                                     <span>&times;</span>
                                 </button>
@@ -198,7 +184,6 @@ const Company = ({ t }) => {
                                                 <label style={{ float: "left" }}>Owner Name:</label>
                                                 <input type="text" className="form-control" value={ownername} onChange={(e) => setOwnername(e.target.value)} />
                                             </div>
-
                                         </form>
                                     </div>
                                     <div className="col-md-6">
@@ -227,12 +212,10 @@ const Company = ({ t }) => {
                                                     placeHolder="Select State"
                                                 />
                                             </div>
-
                                             <div className="form-group mt-4" >
                                                 <label style={{ float: "left" }}>Owner Email:</label>
                                                 <input type="email" className="form-control" value={ownermail} onChange={(e) => setOwnermail(e.target.value)} />
                                             </div>
-
                                             <div className="form-group mt-1">
                                                 <label style={{ float: "left" }}>Owner Phone Number:</label>
                                                 <input type="text" className="form-control" value={ownerNo} onChange={(e) => setOwnerNo(e.target.value)} />
@@ -241,24 +224,16 @@ const Company = ({ t }) => {
                                     </div>
                                 </div>
                                 {error && <div className="text-center text-danger">{error}</div>}
-                                <div className='modal-footer center justify-content-center'>
+                                <div className=' modal-header modal-footer d-flex justify-content-center'>
                                     <button type="submit" className="btn btn-primary mr-2" onClick={handleSubmit}>Submit</button>
                                     <button type="button" className="btn btn-primary" onClick={closeModal}>Cancel</button>
                                 </div>
-
                             </div>
-
-
                         </div>
                     </div>
-
                 </div>
-
-
-
             )}
         </div>
     );
 }
-
 export default withTranslation()(Company);

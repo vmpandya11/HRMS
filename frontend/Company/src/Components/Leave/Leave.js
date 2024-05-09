@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Home from '../Home/Home';
 import LeaveList from './LeaveList';
 
-export default function AddEmployee() {
+export default function Leave() {
 
     const [leavetype, setLeaveType] = useState("");
     const [leavealias, setLeaveAlias] = useState("");
@@ -88,7 +88,6 @@ export default function AddEmployee() {
                                     <li className="breadcrumb-item" style={{ padding: '10px' }}>
                                         <button type="button" className="btn btn-primary 
                                         " onClick={() => setShowModal(true)}>
-                                            {/* <FontAwesomeIcon icon={faPlus} style={{ fontSize: '2em', color: 'white', borderRadius: "50%" }} ></FontAwesomeIcon> */}
                                             Add Leave
                                         </button>
                                     </li>

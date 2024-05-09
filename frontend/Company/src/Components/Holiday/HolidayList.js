@@ -136,6 +136,7 @@ const HolidayList = () => {
                                     {/* ref={tableRef} */}
                                     <thead>
                                         <tr>
+                                            <th className="text-center">S.No</th>
                                             <th className="text-center">Holiday Name</th>
                                             <th className="text-center">Start Date</th>
                                             <th className="text-center">End Date</th>
@@ -143,8 +144,9 @@ const HolidayList = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {currentHolidayData.map((holiday) => (
+                                        {currentHolidayData.map((holiday, index) => (
                                             <tr key={holiday._id}>
+                                                <td className="text-center sno">{(currentPage - 1) * entriesPerPage + index + 1}</td>
                                                 <td className="text-center">{holiday.holidayname}</td>
                                                 <td className="text-center">{holiday.startdate}</td>
                                                 <td className="text-center">{holiday.enddate}</td>
